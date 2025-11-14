@@ -4,320 +4,352 @@ from datetime import datetime, timedelta
 
 # Set page config
 st.set_page_config(
-    page_title="AI Personal Assistant", 
+    page_title="Kriti's PA Agent", 
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# ==================== CLEAN, PROFESSIONAL CSS ====================
+# ==================== MODERN, TRENDY CSS ====================
 
 st.markdown("""
 <style>
-/* Overall styling */
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background-color: #f8f9fa;
-    color: #1a1a1a;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Main container */
 .main {
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 /* Sidebar */
 [data-testid="stSidebar"] {
-    background-color: #2c3e50;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
 }
 
-[data-testid="stSidebar"] * {
-    color: #ffffff !important;
-}
-
-/* Header styling */
+/* Header - Branded */
 .header-container {
-    background: linear-gradient(90deg, #2c3e50 0%, #34495e 100%);
-    padding: 30px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    text-align: center;
 }
 
 .header-title {
     color: #ffffff;
-    font-size: 2.8rem;
-    font-weight: 800;
+    font-size: 3.2rem;
+    font-weight: 900;
     margin: 0;
-    text-align: center;
+    letter-spacing: -1px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .header-subtitle {
-    color: #ecf0f1;
-    font-size: 1.1rem;
-    text-align: center;
+    color: #f0f4f8;
+    font-size: 1.15rem;
     margin-top: 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
-/* Cards - Task cards */
+/* Task cards - Modern */
 .task-card {
-    background-color: #ffffff;
-    border: 2px solid #ecf0f1;
-    border-radius: 8px;
-    padding: 18px;
-    margin: 12px 0;
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #1e293b 0%, #293548 100%);
+    border: 2px solid #334155;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #f1f5f9;
+    cursor: pointer;
 }
 
 .task-card:hover {
-    border-color: #3498db;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+    transform: translateY(-8px);
+    border-color: #6366f1;
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+    background: linear-gradient(135deg, #1e293b 0%, #2d3e52 100%);
 }
 
-/* Work tasks - Green left border */
+/* Work tasks - Green accent */
 .work-task {
-    border-left: 5px solid #27ae60;
-    background-color: #f0fdf4;
+    border-left: 6px solid #10b981;
 }
 
 .work-task:hover {
-    border-color: #27ae60;
-    background-color: #e8fde8;
+    border-left-color: #34d399;
+    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.25);
 }
 
-/* Bar prep tasks - Blue left border */
+/* Bar prep tasks - Purple accent */
 .bar-task {
-    border-left: 5px solid #2980b9;
-    background-color: #f0f7fd;
+    border-left: 6px solid #a78bfa;
 }
 
 .bar-task:hover {
-    border-color: #2980b9;
-    background-color: #e8f4fd;
+    border-left-color: #c4b5fd;
+    box-shadow: 0 20px 40px rgba(167, 139, 250, 0.25);
 }
 
-/* Urgent tasks - Red left border */
+/* Urgent tasks - Red/Pink accent */
 .urgent-task {
-    border-left: 5px solid #e74c3c;
-    background-color: #fdf4f0;
-    font-weight: 600;
+    border-left: 6px solid #f43f5e;
+    background: linear-gradient(135deg, #1e293b 0%, #3a2a3a 100%);
 }
 
 .urgent-task:hover {
-    border-color: #c0392b;
-    background-color: #fde8e0;
+    border-left-color: #ff69b4;
+    box-shadow: 0 20px 40px rgba(244, 63, 94, 0.35);
 }
 
-/* Task title styling */
+/* Task title */
 .task-title {
-    color: #1a1a1a;
-    font-size: 1.05rem;
+    color: #f0f9ff;
+    font-size: 1.15rem;
     font-weight: 700;
-    margin: 0 0 8px 0;
+    margin-bottom: 8px;
+    letter-spacing: 0.3px;
 }
 
 .task-meta {
-    color: #555555;
-    font-size: 0.9rem;
-    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    margin: 4px 0;
+    font-weight: 500;
 }
 
-/* Metrics styling */
+/* Metrics */
 [data-testid="metric-container"] {
-    background: #ffffff;
-    border: 2px solid #ecf0f1;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #1e293b 0%, #293548 100%);
+    border: 2px solid #334155;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s ease;
 }
 
 [data-testid="metric-container"]:hover {
-    border-color: #3498db;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+    border-color: #6366f1;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.25);
 }
 
 /* Alert banners */
-.alert-banner {
-    background-color: #fff3cd;
-    border: 2px solid #ffc107;
-    padding: 18px;
-    border-radius: 8px;
-    margin: 20px 0;
-    color: #856404;
+.alert-warning {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+    border: 2px solid #d97706;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 25px 0;
+    color: #fef3c7;
+    font-weight: 600;
+    font-size: 1.05rem;
+    box-shadow: 0 10px 30px rgba(217, 119, 6, 0.2);
 }
 
-.alert-critical {
-    background-color: #f8d7da;
-    border: 2px solid #f5c6cb;
-    padding: 18px;
-    border-radius: 8px;
-    margin: 20px 0;
-    color: #721c24;
-    font-weight: 600;
+.alert-urgent {
+    background: linear-gradient(135deg, #7c2d12 0%, #dc2626 100%);
+    border: 2px solid #f87171;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 25px 0;
+    color: #fee2e2;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+    animation: pulse-warning 2s infinite;
+}
+
+@keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
 }
 
 .alert-success {
-    background-color: #d4edda;
-    border: 2px solid #c3e6cb;
-    padding: 18px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+    border: 2px solid #10b981;
+    padding: 20px;
+    border-radius: 15px;
     margin: 20px 0;
-    color: #155724;
+    color: #d1fae5;
+    font-weight: 600;
 }
 
-/* Form styling */
+/* Form inputs */
 .stTextInput > div > div > input,
 .stTextArea > div > div > textarea,
-.stSelectbox > div > div > select {
-    border: 2px solid #ecf0f1 !important;
-    border-radius: 6px !important;
-    padding: 12px !important;
+.stSelectbox > div > div > select,
+.stNumberInput > div > div > input {
+    background-color: #1e293b !important;
+    border: 2px solid #334155 !important;
+    border-radius: 12px !important;
+    padding: 14px !important;
     font-size: 1rem !important;
-    color: #1a1a1a !important;
-    background-color: #ffffff !important;
+    color: #f0f9ff !important;
+    font-weight: 500 !important;
 }
 
 .stTextInput > div > div > input:focus,
 .stTextArea > div > div > textarea:focus,
 .stSelectbox > div > div > select:focus {
-    border-color: #2980b9 !important;
-    outline: none !important;
-    box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.1) !important;
+    border-color: #6366f1 !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2) !important;
 }
 
 /* Buttons */
 .stButton > button {
-    background-color: #2980b9 !important;
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
     color: #ffffff !important;
     border: none !important;
-    border-radius: 6px !important;
-    padding: 12px 24px !important;
-    font-weight: 600 !important;
+    border-radius: 12px !important;
+    padding: 14px 28px !important;
+    font-weight: 700 !important;
     font-size: 1rem !important;
     transition: all 0.3s ease !important;
-    cursor: pointer !important;
     width: 100% !important;
+    box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3) !important;
 }
 
 .stButton > button:hover {
-    background-color: #1e5f96 !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(41, 128, 185, 0.3) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4) !important;
 }
 
 /* Section headers */
 .section-header {
-    color: #2c3e50;
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin: 30px 0 20px 0;
-    padding-bottom: 12px;
-    border-bottom: 3px solid #2980b9;
+    color: #f0f9ff;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 35px 0 25px 0;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #6366f1;
+    letter-spacing: -0.5px;
 }
 
 .section-header-green {
-    border-bottom-color: #27ae60;
-    color: #27ae60;
+    border-bottom-color: #10b981;
 }
 
-.section-header-blue {
-    border-bottom-color: #2980b9;
-    color: #2980b9;
+.section-header-purple {
+    border-bottom-color: #a78bfa;
+}
+
+.section-header-red {
+    border-bottom-color: #f43f5e;
 }
 
 /* Tabs */
 [role="tablist"] {
     background-color: transparent !important;
-    border-bottom: 2px solid #ecf0f1 !important;
+    border-bottom: 2px solid #334155 !important;
 }
 
 [role="tab"] {
     background-color: transparent !important;
-    color: #555555 !important;
+    color: #cbd5e1 !important;
     border: none !important;
     border-bottom: 3px solid transparent !important;
-    padding: 12px 20px !important;
-    font-weight: 600 !important;
-    font-size: 1rem !important;
+    padding: 15px 25px !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
     transition: all 0.3s ease !important;
+    letter-spacing: 0.5px;
 }
 
 [role="tab"][aria-selected="true"] {
-    color: #2980b9 !important;
-    border-bottom-color: #2980b9 !important;
+    color: #6366f1 !important;
+    border-bottom-color: #6366f1 !important;
 }
 
 /* Dividers */
 hr {
-    margin: 25px 0 !important;
+    margin: 35px 0 !important;
     border: none !important;
-    border-top: 2px solid #ecf0f1 !important;
+    border-top: 2px solid #334155 !important;
 }
 
 /* Text colors */
 h1 {
-    color: #2c3e50 !important;
-    font-weight: 700 !important;
+    color: #f0f9ff !important;
+    font-weight: 900 !important;
 }
 
 h2 {
-    color: #2c3e50 !important;
-    font-weight: 700 !important;
+    color: #f0f9ff !important;
+    font-weight: 800 !important;
 }
 
 h3 {
-    color: #34495e !important;
-    font-weight: 600 !important;
+    color: #e0e7ff !important;
+    font-weight: 700 !important;
+}
+
+p {
+    color: #cbd5e1 !important;
 }
 
 /* Progress bar */
 [role="progressbar"] {
-    background: linear-gradient(90deg, #2980b9, #3498db) !important;
+    background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
 }
 
-/* Info/Success/Error messages */
+/* Success/Error/Info messages */
 .stSuccess {
-    background-color: #d4edda !important;
-    color: #155724 !important;
-    border: 2px solid #c3e6cb !important;
+    background: linear-gradient(135deg, #065f46 0%, #059669 100%) !important;
+    color: #d1fae5 !important;
+    border: 2px solid #10b981 !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
 }
 
 .stError {
-    background-color: #f8d7da !important;
-    color: #721c24 !important;
-    border: 2px solid #f5c6cb !important;
+    background: linear-gradient(135deg, #7c2d12 0%, #dc2626 100%) !important;
+    color: #fee2e2 !important;
+    border: 2px solid #f87171 !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
 }
 
 .stInfo {
-    background-color: #d1ecf1 !important;
-    color: #0c5460 !important;
-    border: 2px solid #bee5eb !important;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%) !important;
+    color: #bae6fd !important;
+    border: 2px solid #0ea5e9 !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
 }
 
-/* Slider styling */
+/* Slider */
 [data-testid="stSlider"] {
     padding: 20px 0;
 }
 
-/* Label styling */
+/* Label */
 label {
-    color: #2c3e50 !important;
-    font-weight: 600 !important;
-    font-size: 1rem !important;
+    color: #e0e7ff !important;
+    font-weight: 700 !important;
+    font-size: 1.05rem !important;
+    letter-spacing: 0.3px;
 }
 
-/* Complete button styling */
-.complete-btn {
-    background-color: #27ae60 !important;
-    color: #ffffff !important;
-    border: none !important;
-    padding: 8px 12px !important;
-    border-radius: 4px !important;
-    cursor: pointer !important;
-    font-weight: 600 !important;
+/* Number display */
+.metric-value {
+    font-size: 2.5rem !important;
+    font-weight: 900 !important;
+    color: #6366f1 !important;
 }
 
-.complete-btn:hover {
-    background-color: #229954 !important;
+/* Sidebar text */
+[data-testid="stSidebar"] label {
+    color: #f0f9ff !important;
 }
 
 </style>
@@ -461,14 +493,14 @@ def get_weak_subjects():
 # Header
 st.markdown("""
 <div class="header-container">
-    <h1 class="header-title">🤖 AI Personal Assistant</h1>
-    <p class="header-subtitle">Bar Exam Prep & Work Manager</p>
+    <h1 class="header-title">✨ Kriti's PA Agent</h1>
+    <p class="header-subtitle">Your Personal AI Assistant for Bar Exam & Work</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Sidebar
+# Sidebar Navigation
 with st.sidebar:
-    st.title("📍 Navigation")
+    st.markdown("<h2 style='color: #e0e7ff; font-weight: 900; text-align: center; letter-spacing: 1px;'>📍 NAVIGATION</h2>", unsafe_allow_html=True)
     page = st.radio("", 
         ["📊 Dashboard", "💼 Work Tasks", "📚 Bar Prep", "📈 Analytics"],
         label_visibility="collapsed"
@@ -485,15 +517,14 @@ if page == "📊 Dashboard":
     bar_tasks = get_tasks_by_type("bar")
     urgent = get_urgent_tasks()
     
-    # Quick Stats Row
-    st.markdown("<h2 style='color: #2c3e50; margin-bottom: 20px;'>📊 Quick Overview</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-header'>📊 Dashboard Overview</h2>", unsafe_allow_html=True)
     
     col1, col2, col3, col4 = st.columns(4, gap="large")
     
     with col1:
         st.metric("📋 Total Tasks", len(all_tasks))
     with col2:
-        st.metric("💼 Work Tasks", len(work_tasks))
+        st.metric("💼 Work", len(work_tasks))
     with col3:
         st.metric("📚 Bar Prep", len(bar_tasks))
     with col4:
@@ -503,25 +534,20 @@ if page == "📊 Dashboard":
     
     # Urgent Alerts
     if urgent:
-        st.markdown("""
-        <div class="alert-critical">
-        <strong>🔴 URGENT TASKS - Next 3 Days</strong>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="alert-urgent"><strong>🚨 URGENT - Next 3 Days!</strong></div>', unsafe_allow_html=True)
         
         for task in urgent:
             task_id, title, desc, category, task_type, due_date, priority, status, created = task
             st.markdown(f"""
             <div class="task-card urgent-task">
                 <p class="task-title">⚠️ {title}</p>
-                <p class="task-meta">📅 Due: {due_date} | 🎯 Priority: {priority}</p>
+                <p class="task-meta">📅 Due: {due_date} | 🎯 {priority}</p>
             </div>
             """, unsafe_allow_html=True)
     
     st.divider()
     
-    # Task Overview
-    st.markdown("<h2 style='color: #2c3e50; margin-bottom: 20px;'>Your Tasks</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-header'>Your Tasks</h2>", unsafe_allow_html=True)
     
     col1, col2 = st.columns(2, gap="large")
     
@@ -534,19 +560,19 @@ if page == "📊 Dashboard":
                 with col_t:
                     st.markdown(f"""
                     <div class="task-card work-task">
-                        <p class="task-title">{title}</p>
+                        <p class="task-title">✅ {title}</p>
                         <p class="task-meta">📅 {due_date}</p>
                     </div>
                     """, unsafe_allow_html=True)
                 with col_b:
-                    if st.button("✅", key=f"w{task_id}", help="Mark complete"):
+                    if st.button("Done", key=f"w{task_id}", help="Mark complete"):
                         complete_task(task_id)
                         st.rerun()
         else:
-            st.markdown("<div class='alert-success'><strong>✅ No work tasks</strong></div>", unsafe_allow_html=True)
+            st.markdown("<div class='alert-success'><strong>✅ All work tasks done!</strong></div>", unsafe_allow_html=True)
     
     with col2:
-        st.markdown("<h3 class='section-header section-header-blue'>📚 Bar Prep Tasks</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 class='section-header section-header-purple'>📚 Bar Prep Tasks</h3>", unsafe_allow_html=True)
         if bar_tasks:
             for task in bar_tasks[:5]:
                 task_id, title, desc, category, task_type, due_date, priority, status, created = task
@@ -554,27 +580,27 @@ if page == "📊 Dashboard":
                 with col_t:
                     st.markdown(f"""
                     <div class="task-card bar-task">
-                        <p class="task-title">{title}</p>
+                        <p class="task-title">📚 {title}</p>
                         <p class="task-meta">📅 {due_date}</p>
                     </div>
                     """, unsafe_allow_html=True)
                 with col_b:
-                    if st.button("✅", key=f"b{task_id}", help="Mark complete"):
+                    if st.button("Done", key=f"b{task_id}", help="Mark complete"):
                         complete_task(task_id)
                         st.rerun()
         else:
-            st.markdown("<div class='alert-success'><strong>✅ No Bar prep tasks</strong></div>", unsafe_allow_html=True)
+            st.markdown("<div class='alert-success'><strong>✅ All Bar prep tasks done!</strong></div>", unsafe_allow_html=True)
 
 # ==================== WORK TASKS ====================
 
 elif page == "💼 Work Tasks":
     st.markdown("<h2 class='section-header section-header-green'>💼 Work Tasks Management</h2>", unsafe_allow_html=True)
     
-    st.markdown("<p style='color: #555; font-size: 1.05rem; margin-bottom: 20px;'><strong>Add a New Work Task</strong></p>", unsafe_allow_html=True)
-    
     with st.form("work_form"):
+        st.markdown("<p style='color: #e0e7ff; font-weight: 700; font-size: 1.1rem;'>➕ Add New Work Task</p>", unsafe_allow_html=True)
+        
         title = st.text_input("Task Title", placeholder="e.g., Create Constitutional Law content")
-        desc = st.text_area("Description (Optional)", placeholder="Add details about this task", height=80)
+        desc = st.text_area("Description (Optional)", placeholder="Add details", height=80)
         
         col1, col2 = st.columns(2)
         with col1:
@@ -584,11 +610,11 @@ elif page == "💼 Work Tasks":
                 "Work - Team Reporting"
             ])
         with col2:
-            priority = st.selectbox("Priority Level", ["Low", "Medium", "High", "Urgent"])
+            priority = st.selectbox("Priority", ["Low", "Medium", "High", "Urgent"])
         
         due = st.date_input("Due Date")
         
-        if st.form_submit_button("➕ Add Work Task"):
+        if st.form_submit_button("➕ Add Task"):
             if title:
                 add_task(title, desc, task_type, str(due), priority)
                 st.success(f"✅ Task added: {title}")
@@ -597,7 +623,7 @@ elif page == "💼 Work Tasks":
     
     st.divider()
     
-    st.markdown("<h3 style='color: #27ae60; font-weight: 700; margin-bottom: 20px;'>📋 Your Work Tasks</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='section-header section-header-green'>📋 Your Work Tasks</h3>", unsafe_allow_html=True)
     
     work_tasks = get_tasks_by_type("work")
     
@@ -611,28 +637,27 @@ elif page == "💼 Work Tasks":
                 <div class="task-card work-task">
                     <p class="task-title">{title}</p>
                     <p class="task-meta">{desc if desc else 'No description'}</p>
-                    <p class="task-meta">📅 Due: {due_date} | 🎯 {priority}</p>
+                    <p class="task-meta">📅 {due_date} | 🎯 {priority}</p>
                 </div>
                 """, unsafe_allow_html=True)
             with col2:
-                if st.button("✅ Done", key=f"comp_w{task_id}"):
+                if st.button("✓", key=f"comp_w{task_id}"):
                     complete_task(task_id)
                     st.rerun()
     else:
-        st.markdown("<div class='alert-success'><strong>✅ No work tasks. Add one above!</strong></div>", unsafe_allow_html=True)
+        st.markdown("<div class='alert-success'><strong>✅ No pending work tasks!</strong></div>", unsafe_allow_html=True)
 
 # ==================== BAR PREP ====================
 
 elif page == "📚 Bar Prep":
-    st.markdown("<h2 class='section-header section-header-blue'>📚 Bar Exam Preparation</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='section-header section-header-purple'>📚 Bar Exam Preparation</h2>", unsafe_allow_html=True)
     
-    tab1, tab2, tab3 = st.tabs(["📝 Tasks", "📖 Study Sessions", "🎯 Mock Scores"])
+    tab1, tab2, tab3 = st.tabs(["📝 Tasks", "📖 Study", "🎯 Mocks"])
     
-    # ===== TASKS TAB =====
     with tab1:
-        st.markdown("<p style='color: #555; font-size: 1.05rem; margin-bottom: 20px;'><strong>Add a New Bar Prep Task</strong></p>", unsafe_allow_html=True)
-        
         with st.form("bar_form"):
+            st.markdown("<p style='color: #e0e7ff; font-weight: 700; font-size: 1.1rem;'>➕ Add New Bar Task</p>", unsafe_allow_html=True)
+            
             title = st.text_input("Task Title", placeholder="e.g., Constitutional Law essay practice")
             desc = st.text_area("Description (Optional)", height=80)
             
@@ -644,11 +669,11 @@ elif page == "📚 Bar Prep":
                     "Bar Prep - Performance Test"
                 ])
             with col2:
-                priority = st.selectbox("Priority Level", ["Low", "Medium", "High", "Urgent"])
+                priority = st.selectbox("Priority", ["Low", "Medium", "High", "Urgent"])
             
             due = st.date_input("Due Date")
             
-            if st.form_submit_button("➕ Add Bar Task"):
+            if st.form_submit_button("➕ Add Task"):
                 if title:
                     add_task(title, desc, task_type, str(due), priority)
                     st.success(f"✅ Task added: {title}")
@@ -657,7 +682,7 @@ elif page == "📚 Bar Prep":
         
         st.divider()
         
-        st.markdown("<h3 style='color: #2980b9; font-weight: 700; margin-bottom: 20px;'>📋 Your Bar Prep Tasks</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 class='section-header section-header-purple'>📋 Bar Prep Tasks</h3>", unsafe_allow_html=True)
         
         bar_tasks = get_tasks_by_type("bar")
         
@@ -671,19 +696,18 @@ elif page == "📚 Bar Prep":
                     <div class="task-card bar-task">
                         <p class="task-title">{title}</p>
                         <p class="task-meta">{desc if desc else 'No description'}</p>
-                        <p class="task-meta">📅 Due: {due_date} | 🎯 {priority}</p>
+                        <p class="task-meta">📅 {due_date} | 🎯 {priority}</p>
                     </div>
                     """, unsafe_allow_html=True)
                 with col2:
-                    if st.button("✅ Done", key=f"comp_b{task_id}"):
+                    if st.button("✓", key=f"comp_b{task_id}"):
                         complete_task(task_id)
                         st.rerun()
         else:
-            st.markdown("<div class='alert-success'><strong>✅ No Bar prep tasks. Add one above!</strong></div>", unsafe_allow_html=True)
+            st.markdown("<div class='alert-success'><strong>✅ No pending Bar prep tasks!</strong></div>", unsafe_allow_html=True)
     
-    # ===== STUDY TAB =====
     with tab2:
-        st.markdown("<p style='color: #555; font-size: 1.05rem; margin-bottom: 20px;'><strong>Log Your Study Session</strong></p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #e0e7ff; font-weight: 700; font-size: 1.1rem;'>📚 Log Study Session</p>", unsafe_allow_html=True)
         
         bar_subjects = [
             "Civil Procedure", "Constitutional Law", "Contracts", 
@@ -696,21 +720,21 @@ elif page == "📚 Bar Prep":
             col1, col2 = st.columns(2)
             
             with col1:
-                subject = st.selectbox("📚 Subject Studied", bar_subjects)
-                hours = st.number_input("⏱️ Hours Spent", min_value=0.5, max_value=8.0, step=0.5, value=1.5)
+                subject = st.selectbox("📚 Subject", bar_subjects)
+                hours = st.number_input("⏱️ Hours", min_value=0.5, max_value=8.0, step=0.5, value=1.5)
             
             with col2:
-                clarity = st.slider("🧠 Concept Clarity (1=Confused, 5=Mastered)", 1, 5, 3)
+                clarity = st.slider("🧠 Clarity (1=Confused, 5=Mastered)", 1, 5, 3)
             
-            notes = st.text_area("📝 What did you learn?", placeholder="Key concepts, confusing areas, etc.", height=80)
+            notes = st.text_area("📝 Notes", placeholder="What you learned", height=80)
             
-            if st.form_submit_button("📚 Log Study Session"):
+            if st.form_submit_button("📚 Log Session"):
                 log_study(subject, hours, clarity, notes)
-                st.success(f"✅ Logged: {subject} ({hours}h, clarity {clarity}/5)")
+                st.success(f"✅ Logged: {subject} ({hours}h)")
         
         st.divider()
         
-        st.markdown("<h3 style='color: #2980b9; font-weight: 700; margin-bottom: 20px;'>📋 Recent Study Sessions</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 class='section-header section-header-purple'>📋 Recent Sessions</h3>", unsafe_allow_html=True)
         
         progress = get_study_progress()
         if progress:
@@ -721,15 +745,13 @@ elif page == "📚 Bar Prep":
                 <div class="task-card">
                     <p class="task-title">{clarity_emoji} {subject}</p>
                     <p class="task-meta">{hours}h | Clarity: {clarity}/5 | {date[:10]}</p>
-                    <p class="task-meta">Note: {notes[:60]}</p>
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.markdown("<div class='alert-success'><strong>No study sessions yet.</strong></div>", unsafe_allow_html=True)
+            st.markdown("<div class='alert-success'><strong>No sessions yet.</strong></div>", unsafe_allow_html=True)
     
-    # ===== MOCKS TAB =====
     with tab3:
-        st.markdown("<p style='color: #555; font-size: 1.05rem; margin-bottom: 20px;'><strong>Log a Mock Exam Score</strong></p>", unsafe_allow_html=True)
+        st.markdown("<p style='color: #e0e7ff; font-weight: 700; font-size: 1.1rem;'>🎯 Log Mock Score</p>", unsafe_allow_html=True)
         
         with st.form("mock_form"):
             col1, col2 = st.columns(2)
@@ -740,22 +762,22 @@ elif page == "📚 Bar Prep":
                     "Performance Test", "MBE Section",
                     "Full MBE (200q)", "Full Practice Exam"
                 ])
-                score = st.number_input("📊 Your Score", min_value=0, step=1, value=0)
+                score = st.number_input("📊 Score", min_value=0, step=1, value=0)
             
             with col2:
-                total = st.number_input("📊 Total Points", min_value=1, step=1, value=100)
-                subjects = st.text_input("🏷️ Subjects Covered", placeholder="e.g., Constitutional Law, Torts")
+                total = st.number_input("📊 Total", min_value=1, step=1, value=100)
+                subjects = st.text_input("🏷️ Subjects", placeholder="e.g., Constitutional Law, Torts")
             
-            notes = st.text_area("💭 How did you feel?", height=80)
+            notes = st.text_area("💭 Notes", height=80)
             
-            if st.form_submit_button("🎯 Log Mock Score"):
+            if st.form_submit_button("🎯 Log Score"):
                 log_mock(exam_type, score, total, notes)
                 percentage = (score / total * 100) if total > 0 else 0
-                st.success(f"✅ Mock logged: {percentage:.1f}%")
+                st.success(f"✅ Logged: {percentage:.1f}%")
         
         st.divider()
         
-        st.markdown("<h3 style='color: #2980b9; font-weight: 700; margin-bottom: 20px;'>🎯 Mock Score History</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 class='section-header section-header-purple'>🎯 Score History</h3>", unsafe_allow_html=True)
         
         conn = init_db()
         c = conn.cursor()
@@ -775,7 +797,7 @@ elif page == "📚 Bar Prep":
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.markdown("<div class='alert-success'><strong>No mock scores yet.</strong></div>", unsafe_allow_html=True)
+            st.markdown("<div class='alert-success'><strong>No scores yet.</strong></div>", unsafe_allow_html=True)
 
 # ==================== ANALYTICS ====================
 
@@ -785,27 +807,25 @@ elif page == "📈 Analytics":
     progress = get_study_progress()
     weak = get_weak_subjects()
     
-    # Metrics
     col1, col2, col3 = st.columns(3, gap="large")
     
     if progress:
         total_hours = sum([p[2] for p in progress])
         with col1:
-            st.metric("⏰ Total Study Hours", f"{total_hours:.1f}h")
+            st.metric("⏰ Study Hours", f"{total_hours:.1f}h")
     
     if weak:
         avg_clarity = sum([w[1] for w in weak]) / len(weak)
         with col2:
-            st.metric("📊 Average Clarity", f"{avg_clarity:.1f}/5")
+            st.metric("📊 Avg Clarity", f"{avg_clarity:.1f}/5")
     
     completed = len([t for t in get_all_tasks() if t[7] == "completed"])
     with col3:
-        st.metric("✅ Tasks Completed", completed)
+        st.metric("✅ Completed", completed)
     
     st.divider()
     
-    # Weak Subjects
-    st.markdown("<h3 style='color: #e74c3c; font-weight: 700; margin-bottom: 20px;'>🔍 Areas That Need Focus</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='section-header section-header-red'>🔍 Areas That Need Focus</h3>", unsafe_allow_html=True)
     
     if weak:
         for subject in weak[:10]:
@@ -821,12 +841,11 @@ elif page == "📈 Analytics":
             with col3:
                 st.write(f"{avg_clarity:.1f}/5")
     else:
-        st.markdown("<div class='alert-success'><strong>Keep logging study sessions to see your weak areas!</strong></div>", unsafe_allow_html=True)
+        st.markdown("<div class='alert-success'><strong>Keep logging to see weak areas!</strong></div>", unsafe_allow_html=True)
     
     st.divider()
     
-    # Study Progress Chart
-    st.markdown("<h3 style='color: #2980b9; font-weight: 700; margin-bottom: 20px;'>📚 Total Study Hours by Subject</h3>", unsafe_allow_html=True)
+    st.markdown("<h3 class='section-header'>📚 Study Hours by Subject</h3>", unsafe_allow_html=True)
     
     if progress:
         study_by_subject = {}
@@ -839,12 +858,12 @@ elif page == "📈 Analytics":
         
         st.bar_chart({s: h for s, h in study_by_subject.items()})
     else:
-        st.markdown("<div class='alert-success'><strong>No study data yet. Log sessions to see charts!</strong></div>", unsafe_allow_html=True)
+        st.markdown("<div class='alert-success'><strong>No data yet!</strong></div>", unsafe_allow_html=True)
 
 # ==================== SIDEBAR ====================
 
 st.sidebar.divider()
-st.sidebar.markdown("<h3 style='color: #ecf0f1;'>📊 Quick Stats</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("<h3 style='color: #e0e7ff; font-weight: 900; text-align: center;'>📊 QUICK STATS</h3>", unsafe_allow_html=True)
 
 all_tasks = get_all_tasks()
 urgent = get_urgent_tasks()
@@ -860,11 +879,13 @@ with col2:
 st.sidebar.metric("Sessions", len(progress), label_visibility="collapsed")
 
 if weak:
-    st.sidebar.markdown(f"<p style='color: #ecf0f1; font-size: 0.9rem;'><strong>Weakest:</strong> {weak[0][0]}</p>", unsafe_allow_html=True)
+    st.sidebar.markdown(f"<p style='color: #cbd5e1; font-size: 0.95rem; text-align: center;'><strong>Weakest:</strong><br>{weak[0][0]}</p>", unsafe_allow_html=True)
 
 st.sidebar.divider()
 st.sidebar.markdown("""
-<p style='color: #ecf0f1; font-size: 0.85rem; text-align: center;'>
-✅ Your data is secure and stored locally
+<p style='color: #cbd5e1; font-size: 0.85rem; text-align: center;'>
+✨ Kriti's PA Agent<br>
+Your personal AI assistant<br>
+Data stored locally & secure
 </p>
 """, unsafe_allow_html=True)
